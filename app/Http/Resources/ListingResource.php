@@ -45,7 +45,7 @@ class ListingResource extends JsonResource
         $images = [];
 
         for ($i = 1; $i <= 4; $i++) {
-            $images[] = asset(
+            $images['image_' . $i] = asset(
                 'images/' . $id . '/Image_' . $i . '.jpg'
             );
         }
