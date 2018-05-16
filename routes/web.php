@@ -11,8 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('app');
-});
+Route::get('/', 'HomeController@index');
 
 Route::resource('listing', 'ListingController');

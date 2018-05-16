@@ -4,16 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\ListingResource;
 use App\Listing;
+use Illuminate\Http\Request;
 
 class ListingController extends Controller
 {
-    public function show(Listing $listing)
+    public function show(Listing $listing, Request $request)
     {
         $model = $listing->toArray();
 
-        $model = $this->add_image_urls($model, $listing->id);
+        $data = collect(['listing' => $this->add_image_urls($model, $listing->id)]);
 
-        return view('app', ['model' => $model]);
+        $data = $this->add_meta_data($data, $request);
+
+        return view('app', ['data' => $data]);
     }
 
     private function add_image_urls($model, $id) {
@@ -23,4 +26,8 @@ class ListingController extends Controller
         }
         return $model;
     }
+
+    private function add_meta_data($collection, $request){
+        return $collection->merge([ 'path' => $request->getPathInfo() ]); }
+
 }
