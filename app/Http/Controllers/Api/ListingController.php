@@ -11,6 +11,16 @@ class ListingController extends Controller
 {
     public function show(Listing $listing)
     {
-        return new ListingResource($listing);
+        $data = $this->get_listing($listing);
+        return response()->json($data);
+    }
+
+    private function get_listing($listing)
+    {
+        $model = $listing->toArray();
+        for($i = 1; $i <=4; $i++) {
+            $model['image_' . $i] = asset('images/' . $listing->id . '/Image_' . $i . '.jpg');
+        }
+        return collect(['listing' => $model]);
     }
 }
