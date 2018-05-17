@@ -12,5 +12,7 @@
 */
 
 Route::get('/', 'HomeController@index');
+Route::get('saved', 'HomeController@index');
 
 Route::resource('listing', 'ListingController');
+

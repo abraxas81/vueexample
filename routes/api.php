@@ -21,6 +21,7 @@ Route::namespace('Api')->group(function (){
 
     Route::get('listing/{listing}', 'ListingController@show');
     Route::get('/', 'HomeController@index');
+    Route::get('saved', 'HomeController@index');
 
 });
 
