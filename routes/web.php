@@ -12,7 +12,9 @@
 */
 
 Route::get('/', 'HomeController@index');
-Route::get('saved', 'HomeController@index');
+Route::get('saved', 'HomeController@index')->middleware('auth');
 
 Route::resource('listing', 'ListingController');
+
+Auth::routes();
 

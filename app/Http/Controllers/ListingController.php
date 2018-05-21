@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\ListingResource;
 use App\Listing;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ListingController extends Controller
 {
@@ -15,7 +16,6 @@ class ListingController extends Controller
         $data = collect(['listing' => $this->add_image_urls($model, $listing->id)]);
 
         $data = $this->add_meta_data($data, $request);
-
         return view('app', ['data' => $data]);
     }
 
@@ -27,7 +27,14 @@ class ListingController extends Controller
         return $model;
     }
 
-    private function add_meta_data($collection, $request){
-        return $collection->merge([ 'path' => $request->getPathInfo() ]); }
+    private function add_meta_data($collection, $request)
+    {
 
+
+        return $collection->merge([
+            'path' => $request->getPathInfo(),
+            'auth' => Auth::check(),
+            'saved' => Auth::check() ? Auth::user()->saved : []
+        ]);
+    }
 }

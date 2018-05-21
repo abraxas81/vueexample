@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $data = $this->get_listing_summaries();
         return response()->json($data);
@@ -27,5 +27,13 @@ class HomeController extends Controller
             return $listing;
         });
         return collect(['listings' => $collection->toArray()]);
+    }
+
+    private function add_meta_data($collection, $request) {
+
+        return $collection->merge([
+            'path' => $request->getPathInfo(),
+            'auth' => Auth::check()
+        ]);
     }
 }

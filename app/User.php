@@ -26,4 +26,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function listings()
+    {
+        return $this->belongsToMany(Listing::class, 'user_id', 'listing_id');
+    }
 }
